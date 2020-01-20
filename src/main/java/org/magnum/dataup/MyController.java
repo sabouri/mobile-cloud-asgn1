@@ -22,6 +22,7 @@ import org.magnum.dataup.model.Video;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 //import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.servlet.http.HttpServletResponse;
@@ -57,9 +58,15 @@ public class MyController {
 
 	@RequestMapping(value= "/video", method= RequestMethod.POST)
 	@ResponseBody
-	public Video uploadVideo(Video vid)
+	public Video uploadVideo(Video vid, @RequestParam("file") MultipartFile file)
 	{
-		Video retVid;
+		Video retVid = Video.create().build(file.getOriginalFilename());
+		retVid.setContentType(file.getContentType());
+		retVid.setDuration(file.get);
+
+		//Creation de vid
+		// Passage a service
+
 
 
 		return retVid;
