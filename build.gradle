@@ -1,6 +1,6 @@
 buildscript {
 	ext {
-		springBootVersion = '2.1.0.RELEASE'
+		springBootVersion = '3.0.5.RELEASE'
 	}
     repositories {
         maven { url "https://repo.spring.io/libs-snapshot" }
@@ -8,6 +8,7 @@ buildscript {
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:1.0.2.RELEASE")
+//        classpath("org.springframework:spring-web:1.0.2.RELEASE")
     }
 }
 
@@ -15,8 +16,11 @@ apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
 //apply plugin: 'org.springframework.boot'
+//apply plugin: org.springframework.boot.gradle.plugin.SpringBootPlugin
+
 apply plugin: 'spring-boot'
 apply plugin: 'war'
+//apply plugin: 'org.springframework:spring-web'
 
 
 sourceCompatibility = 1.8
@@ -38,7 +42,6 @@ repositories {
 }
 
 dependencies {
-
     compile("org.springframework.boot:spring-boot-starter-web")
     compile("org.springframework.boot:spring-boot-starter-actuator")
     compile("org.springframework.boot:spring-boot-starter-aop")
@@ -63,7 +66,11 @@ dependencies {
     compile(":video.up.test:1.0.0")
     compile(":autograder.handin:1.0.0")
     compile(":autograder.spec:1.0.0")
-    
+//    compile("org.springframework:spring-web:.RELEASE\n")
+
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+
     testCompile("junit:junit")
 }
 

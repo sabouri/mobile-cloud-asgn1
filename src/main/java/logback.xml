@@ -6,4 +6,9 @@
 	<logger name="org.springframework" level="INFO"/>
 	<logger name="org.magnum" level="DEBUG"/>
 
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-webmvc</artifactId>
+		<version>4.3.6.RELEASE</version>
+	</dependency>
 </configuration>

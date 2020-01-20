@@ -112,5 +112,21 @@ public class VideoFileManager {
 		Path target = getVideoPath(v);
 		Files.copy(videoData, target, StandardCopyOption.REPLACE_EXISTING);
 	}
+
+	/**
+	 * This method reads all of the data in the provided InputStream and stores
+	 * it on the file system. The data is associated with the Video object that
+	 * is provided by the caller.
+	 *
+	 * @param v
+	 * @param videoData
+	 * @throws IOException
+	 */
+	public void getVideoData(Video v, InputStream videoData) throws IOException{
+		assert(videoData != null);
+
+		Path target = getVideoPath(v);
+		Files.copy(videoData, target, StandardCopyOption.REPLACE_EXISTING);
+	}
 	
 }
