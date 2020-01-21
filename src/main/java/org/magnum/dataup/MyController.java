@@ -22,9 +22,12 @@ import org.magnum.dataup.model.Video;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 //import org.springframework.web.bind.annotation.GetMapping;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
@@ -58,23 +61,23 @@ public class MyController {
 
 	@RequestMapping(value= "/video", method= RequestMethod.POST)
 	@ResponseBody
-	public Video uploadVideo(Video vid, @RequestParam("file") MultipartFile file)
+	public Video uploadVideoData(@RequestBody Video vid)
 	{
-		Video retVid = Video.create().build(file.getOriginalFilename());
-		retVid.setContentType(file.getContentType());
-		retVid.setDuration(file.get);
+		vid.setId(MyService.last_id.incrementAndGet());
+		vid.setDataUrl(getDataUrl(vid.getId()));
+		service_t.addVideoInf(vid);
 
-		//Creation de vid
-		// Passage a service
+		return vid;
+	}
 
-
-
-		return retVid;
+	@RequestMapping(value= "/video/{id}/data", method= RequestMethod.POST)
+	@ResponseBody
+	public Video uploadVideo(@RequestParam("file") MultipartFile file)
+	{
+		
 	}
 
 
-
-//	@GetMapping("GET /video/{id}/data")
 	@RequestMapping(value= "/video/{id}/data", method= RequestMethod.GET)
 	@ResponseBody
 	public OutputStream getSepecificVid(@PathVariable("id") int id) throws IOException {
@@ -84,4 +87,19 @@ public class MyController {
 		IOUtils.copy(inStrm,outStrm);
 		return outStrm;
 	}
+
+	private String getDataUrl(long videoId){
+		String url = getUrlBaseForLocalServer() + "/video/" + videoId + "/data";
+		return url;
+	}
+
+	private String getUrlBaseForLocalServer() {
+		HttpServletRequest request =
+				((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+		String base =
+				"http://"+request.getServerName()
+						+ ((request.getServerPort() != 80) ? ":"+request.getServerPort() : "");
+		return base;
+	}
+
 }
