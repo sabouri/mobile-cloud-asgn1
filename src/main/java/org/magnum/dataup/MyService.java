@@ -2,6 +2,7 @@ package org.magnum.dataup;
 
 import org.magnum.dataup.model.Video;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -47,5 +48,22 @@ public class MyService
             fileManager.getVideoData(searchedVid, in);
         }
 
+    }
+
+    public void storeFile(int id, MultipartFile fi) throws IOException
+    {
+        Video searchedVid = null;
+        for(Video vid: addedVids)
+        {
+            if(vid.getId() == id)
+            {
+                searchedVid = vid; break;
+            }
+        }
+        if(searchedVid!= null)
+        {
+            fileManager.saveVideoData(searchedVid, fi.getInputStream());
+        }
+//        return false;
     }
 }

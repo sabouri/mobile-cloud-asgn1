@@ -19,7 +19,9 @@ package org.magnum.dataup;
 
 import org.apache.commons.compress.utils.IOUtils;
 import org.magnum.dataup.model.Video;
+import org.magnum.dataup.model.VideoStatus;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -72,9 +74,18 @@ public class MyController {
 
 	@RequestMapping(value= "/video/{id}/data", method= RequestMethod.POST)
 	@ResponseBody
-	public Video uploadVideo(@RequestParam("file") MultipartFile file)
+	public VideoStatus uploadVideo(@RequestParam("file") MultipartFile file, @PathVariable("id") int id)
 	{
-		
+		try
+		{
+			service_t.storeFile(id , file);
+		}
+		catch(IOException e)
+		{
+			return null;
+		}
+		return new VideoStatus(VideoStatus.VideoState.READY);
+
 	}
 
 
