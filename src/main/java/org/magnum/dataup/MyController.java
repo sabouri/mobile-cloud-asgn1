@@ -22,7 +22,10 @@ import org.magnum.dataup.model.Video;
 import org.magnum.dataup.model.VideoStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -56,7 +59,7 @@ public class MyController {
 //	@GetMapping(value= "/video")
 	@RequestMapping(value= "/video", method= RequestMethod.GET)
 	@ResponseBody
-	public LinkedList<Video> getVidsList(Video vid)
+	public LinkedList<Video> getVidsList()
 	{
 		return service_t.getVidsLis();
 	}
@@ -74,7 +77,7 @@ public class MyController {
 
 	@RequestMapping(value= "/video/{id}/data", method= RequestMethod.POST)
 	@ResponseBody
-	public VideoStatus uploadVideo(@RequestParam("file") MultipartFile file, @PathVariable("id") int id)
+	public ResponseEntity<VideoStatus> uploadVideo(@RequestParam("file") MultipartFile file, @PathVariable("id") int id)
 	{
 		try
 		{
@@ -82,9 +85,9 @@ public class MyController {
 		}
 		catch(IOException e)
 		{
-			return null;
+			return  new ResponseEntity( HttpStatus.NOT_FOUND);
 		}
-		return new VideoStatus(VideoStatus.VideoState.READY);
+		return new ResponseEntity(new VideoStatus(VideoStatus.VideoState.READY), HttpStatus.OK);
 
 	}
 
