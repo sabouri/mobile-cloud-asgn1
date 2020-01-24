@@ -19,7 +19,7 @@ public class MyService
 
     @Autowired
     public MyService() throws IOException {
-        LinkedList<Video> addedVids= new LinkedList<Video>();
+        addedVids= new LinkedList<>();
         fileManager = VideoFileManager.get();
         last_id = new AtomicLong(1);
     }
@@ -50,7 +50,7 @@ public class MyService
 
     }
 
-    public void storeFile(int id, MultipartFile fi) throws IOException
+    public void storeFile(long id, MultipartFile fi) throws IOException
     {
         Video searchedVid = null;
         for(Video vid: addedVids)

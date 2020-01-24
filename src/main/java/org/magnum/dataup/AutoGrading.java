@@ -61,7 +61,7 @@ package org.magnum.dataup;
 public class AutoGrading {
 
 	public static void main(String[] args) throws Exception {
-		AutoGradingSpec.grade(args);
+//		AutoGradingSpec.grade(args);
 	}
 
 }

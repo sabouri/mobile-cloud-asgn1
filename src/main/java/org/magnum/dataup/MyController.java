@@ -77,7 +77,7 @@ public class MyController {
 
 	@RequestMapping(value= "/video/{id}/data", method= RequestMethod.POST)
 	@ResponseBody
-	public ResponseEntity<VideoStatus> uploadVideo(@RequestParam("file") MultipartFile file, @PathVariable("id") int id)
+	public ResponseEntity<VideoStatus> uploadVideo(@RequestParam("file") MultipartFile file, @PathVariable("id") long id)
 	{
 		try
 		{
